@@ -3,21 +3,21 @@ import {Comment} from './Comment'
 
 import styles from './Post.module.css'
 
-export function Post() {
+export function Post({author, content, publishedAt}) {
   return (
     <article className={styles.post}>
       <header>
         <div className={styles.author}>
           <Avatar
-            imageSrc="https://github.com/phcbarros.png"
-            imageAlt="Foto de Paulo Barros"
+            imageSrc={author.avatarUrl}
+            imageAlt={`Foto de ${author.name}`}
           />
           <div className={styles.authorInfo}>
             <strong>Paulo Barros</strong>
             <span>Web Developer</span>
           </div>
         </div>
-        <time dateTime="2022-05-11 08:13:00" title="11 de maio às 08:13h">
+        <time dateTime={publishedAt} title="11 de maio às 08:13h">
           Publicado há 1h
         </time>
       </header>
