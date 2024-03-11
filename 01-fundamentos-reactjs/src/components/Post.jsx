@@ -1,9 +1,17 @@
+import {format, formatDistanceToNow} from 'date-fns'
+import ptBR from 'date-fns/locale/pt-BR'
 import {Avatar} from './Avatar'
 import {Comment} from './Comment'
 
 import styles from './Post.module.css'
 
-export function Post({author, content, publishedAt}) {
+export function Post({author, content, publishedAt: date}) {
+  const formattedDate = format(date, 'd MMM yyyy, HH:mm', {locale: ptBR})
+  const relativeDate = formatDistanceToNow(date, {
+    locale: ptBR,
+    addSuffix: true,
+  })
+
   return (
     <article className={styles.post}>
       <header>
@@ -13,36 +21,30 @@ export function Post({author, content, publishedAt}) {
             imageAlt={`Foto de ${author.name}`}
           />
           <div className={styles.authorInfo}>
-            <strong>Paulo Barros</strong>
-            <span>Web Developer</span>
+            <strong>{author.name}</strong>
+            <span>{author.role}</span>
           </div>
         </div>
-        <time dateTime={publishedAt} title="11 de maio às 08:13h">
-          Publicado há 1h
+        <time dateTime={date.toISOString()} title={formattedDate}>
+          {relativeDate}
         </time>
       </header>
 
       <div className={styles.content}>
-        <p>Fala galeraa 👋</p>
-        <p>
-          Acabei de subir mais um projeto no meu portifa. É um projeto que fiz
-          no NLW Return, evento da Rocketseat. O nome do projeto é DoctorCare 🚀
-        </p>
-        <p>
-          <a href="#">jane.design/doctorcare</a>
-        </p>
-        <p>
-          <a href="#">#novoprojeto</a>
-          <a href="#">#nlw</a>
-          <a href="#">#rocketseat</a>
-        </p>
+        {content.map(({type, content: text}) =>
+          type === 'paragraph' ? (
+            <p key={text}>{text}</p>
+          ) : type === 'link' ? (
+            <p key={text}>
+              <a href="#">{text}</a>
+            </p>
+          ) : null,
+        )}
       </div>
 
       <form className={styles.commentForm}>
         <strong>Deixe seu feedback</strong>
-
         <textarea placeholder="Deixe um comentário" />
-
         <footer>
           <button type="submit">Publicar</button>
         </footer>

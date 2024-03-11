@@ -23,13 +23,13 @@ const posts = [
       },
       {type: 'link', content: 'jane.design/doctorcare'},
     ],
-    publishedAt: new Date('2024-04-10 20:00:00'),
+    publishedAt: new Date('2024-03-10 20:00:00'),
   },
   {
     author: {
       name: 'Diego Fernandes',
       avatarUrl: 'https://github.com/diego3g.png',
-      role: 'CEO at Rockeatseat',
+      role: 'CTO at Rockeatseat',
     },
     content: [
       {type: 'paragraph', content: 'Fala galeraa 👋'},
@@ -40,7 +40,7 @@ const posts = [
       },
       {type: 'link', content: 'jane.design/doctorcare'},
     ],
-    publishedAt: new Date('2024-04-11 20:00:00'),
+    publishedAt: new Date('2024-03-09 20:00:00'),
   },
 ]
 
