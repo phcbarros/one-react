@@ -4,13 +4,22 @@ import {Avatar} from './Avatar'
 import {Comment} from './Comment'
 
 import styles from './Post.module.css'
+import {useState} from 'react'
 
 export function Post({author, content, publishedAt: date}) {
+  const [comments, setComments] = useState([1, 2])
+  const [newCommentText, setNewCommentText] = useState('')
+
   const formattedDate = format(date, 'd MMM yyyy, HH:mm', {locale: ptBR})
   const relativeDate = formatDistanceToNow(date, {
     locale: ptBR,
     addSuffix: true,
   })
+
+  function handleCreateNewComment() {
+    event.preventDefault()
+    setComments([...comments, newCommentText])
+  }
 
   return (
     <article className={styles.post}>
@@ -42,7 +51,7 @@ export function Post({author, content, publishedAt: date}) {
         )}
       </div>
 
-      <form className={styles.commentForm}>
+      <form onSubmit={handleCreateNewComment} className={styles.commentForm}>
         <strong>Deixe seu feedback</strong>
         <textarea placeholder="Deixe um comentário" />
         <footer>
@@ -51,9 +60,9 @@ export function Post({author, content, publishedAt: date}) {
       </form>
 
       <div className={styles.commentList}>
-        <Comment />
-        <Comment />
-        <Comment />
+        {comments.map((comment) => (
+          <Comment key={comment} />
+        ))}
       </div>
     </article>
   )
