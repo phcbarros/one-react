@@ -26,6 +26,7 @@ const posts = [
     publishedAt: new Date('2024-03-10 20:00:00'),
   },
   {
+    id: 2,
     author: {
       name: 'Diego Fernandes',
       avatarUrl: 'https://github.com/diego3g.png',

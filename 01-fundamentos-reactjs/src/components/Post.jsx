@@ -7,7 +7,7 @@ import styles from './Post.module.css'
 import {useState} from 'react'
 
 export function Post({author, content, publishedAt: date}) {
-  const [comments, setComments] = useState([1, 2])
+  const [comments, setComments] = useState(['Muito bom, hein!'])
   const [newCommentText, setNewCommentText] = useState('')
 
   const formattedDate = format(date, 'd MMM yyyy, HH:mm', {locale: ptBR})
@@ -18,7 +18,21 @@ export function Post({author, content, publishedAt: date}) {
 
   function handleCreateNewComment() {
     event.preventDefault()
+
     setComments([...comments, newCommentText])
+    setNewCommentText('')
+  }
+
+  function handleNewCommentChange(event) {
+    event.target.setCustomValidity('')
+    setNewCommentText(event.target.value)
+  }
+
+  function deleteComment(commentToDelete) {
+    const filteredComments = comments.filter((commentItem) => {
+      return commentItem !== commentToDelete
+    })
+    setComments(filteredComments)
   }
 
   return (
@@ -53,7 +67,12 @@ export function Post({author, content, publishedAt: date}) {
 
       <form onSubmit={handleCreateNewComment} className={styles.commentForm}>
         <strong>Deixe seu feedback</strong>
-        <textarea placeholder="Deixe um comentário" />
+        <textarea
+          name="comment"
+          placeholder="Deixe um comentário"
+          value={newCommentText}
+          onChange={handleNewCommentChange}
+        />
         <footer>
           <button type="submit">Publicar</button>
         </footer>
@@ -61,7 +80,11 @@ export function Post({author, content, publishedAt: date}) {
 
       <div className={styles.commentList}>
         {comments.map((comment) => (
-          <Comment key={comment} />
+          <Comment
+            key={comment}
+            content={comment}
+            onDeleteComment={deleteComment}
+          />
         ))}
       </div>
     </article>
