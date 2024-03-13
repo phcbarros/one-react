@@ -11,7 +11,13 @@
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
       rel="stylesheet"
     />
-    <title>Vite + React</title>
+    <title>Backoffice Remote Exemplo</title>
+    <script>
+      // Isso habilita os remotos a encontram seus recursos
+      globalThis.__assetsPath = (url, filename) => {
+        return url.origin + '/' + filename
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
