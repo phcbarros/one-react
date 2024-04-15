@@ -1,41 +1,65 @@
 import {format, formatDistanceToNow} from 'date-fns'
-import ptBR from 'date-fns/locale/pt-BR'
+import {ptBR} from 'date-fns/locale/pt-BR'
 import {Avatar} from './Avatar'
 import {Comment} from './Comment'
+import {
+  type FormEvent,
+  useState,
+  type ChangeEvent,
+  type InvalidEvent,
+} from 'react'
 
 import styles from './Post.module.css'
-import {useState} from 'react'
 
-export function Post({author, content, publishedAt: date}) {
+interface Author {
+  name: string
+  role: string
+  avatarUrl: string
+}
+
+interface Content {
+  type: 'paragraph' | 'link'
+  content: string
+}
+
+interface PostProps {
+  author: Author
+  publishedAt: Date
+  content: Content[]
+}
+
+export function Post({author, content, publishedAt}: Readonly<PostProps>) {
   const [comments, setComments] = useState(['Muito bom, hein!'])
   const [newCommentText, setNewCommentText] = useState('')
 
-  const formattedDate = format(date, 'd MMM yyyy, HH:mm', {locale: ptBR})
-  const relativeDate = formatDistanceToNow(date, {
+  const formattedDate = format(publishedAt, 'd MMM yyyy, HH:mm', {
+    locale: ptBR,
+  })
+  const relativeDate = formatDistanceToNow(publishedAt, {
     locale: ptBR,
     addSuffix: true,
   })
 
-  function handleCreateNewComment() {
+  function handleCreateNewComment(event: FormEvent) {
     event.preventDefault()
 
     setComments([...comments, newCommentText])
     setNewCommentText('')
   }
 
-  function handleNewCommentChange(event) {
+  function handleNewCommentChange(event: ChangeEvent<HTMLTextAreaElement>) {
     event.target.setCustomValidity('')
     setNewCommentText(event.target.value)
   }
 
-  function deleteComment(commentToDelete) {
+  function deleteComment(commentToDelete: string) {
     const filteredComments = comments.filter((commentItem) => {
       return commentItem !== commentToDelete
     })
     setComments(filteredComments)
   }
 
-  function handleNewCommentInvalid(event) {
+  function handleNewCommentInvalid(event: InvalidEvent<HTMLTextAreaElement>) {
     event.target.setCustomValidity('Esse campo é obrigatório!')
   }
 
@@ -54,7 +78,7 @@ export function Post({author, content, publishedAt: date}) {
             <span>{author.role}</span>
           </div>
         </div>
-        <time dateTime={date.toISOString()} title={formattedDate}>
+        <time dateTime={publishedAt.toISOString()} title={formattedDate}>
           {relativeDate}
         </time>
       </header>
