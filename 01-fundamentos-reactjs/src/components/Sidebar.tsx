@@ -14,8 +14,8 @@ export function Sidebar() {
 
       <div className={styles.profile}>
         <Avatar
-          imageSrc="https://github.com/phcbarros.png"
-          imageAlt="foto de Paulo Barros"
+          src="https://github.com/phcbarros.png"
+          alt="foto de Paulo Barros"
         />
         <strong>Paulo Barros</strong>
         <span>Web Developer</span>

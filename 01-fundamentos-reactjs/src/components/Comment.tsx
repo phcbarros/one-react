@@ -25,8 +25,8 @@ export function Comment({content, onDeleteComment}: Readonly<CommentProps>) {
   return (
     <div className={styles.comment}>
       <Avatar
-        imageSrc="https://github.com/phcbarros.png"
-        imageAlt="Foto de Paulo Barros"
+        src="https://github.com/phcbarros.png"
+        alt="Foto de Paulo Barros"
         hasBorder={false}
       />
 

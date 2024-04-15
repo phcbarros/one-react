@@ -22,20 +22,25 @@ interface Content {
   content: string
 }
 
-interface PostProps {
+export interface PostType {
+  id: number
   author: Author
   publishedAt: Date
   content: Content[]
 }
 
-export function Post({author, content, publishedAt}: Readonly<PostProps>) {
+interface PostProps {
+  post: PostType
+}
+
+export function Post({post}: Readonly<PostProps>) {
   const [comments, setComments] = useState(['Muito bom, hein!'])
   const [newCommentText, setNewCommentText] = useState('')
 
-  const formattedDate = format(publishedAt, 'd MMM yyyy, HH:mm', {
+  const formattedDate = format(post.publishedAt, 'd MMM yyyy, HH:mm', {
     locale: ptBR,
   })
-  const relativeDate = formatDistanceToNow(publishedAt, {
+  const relativeDate = formatDistanceToNow(post.publishedAt, {
     locale: ptBR,
     addSuffix: true,
   })
@@ -70,21 +75,21 @@ export function Post({author, content, publishedAt}: Readonly<PostProps>) {
       <header>
         <div className={styles.author}>
           <Avatar
-            imageSrc={author.avatarUrl}
-            imageAlt={`Foto de ${author.name}`}
+            src={post.author.avatarUrl}
+            alt={`Foto de ${post.author.name}`}
           />
           <div className={styles.authorInfo}>
-            <strong>{author.name}</strong>
-            <span>{author.role}</span>
+            <strong>{post.author.name}</strong>
+            <span>{post.author.role}</span>
           </div>
         </div>
-        <time dateTime={publishedAt.toISOString()} title={formattedDate}>
+        <time dateTime={post.publishedAt.toISOString()} title={formattedDate}>
           {relativeDate}
         </time>
       </header>
 
       <div className={styles.content}>
-        {content.map(({type, content: text}) =>
+        {post.content.map(({type, content: text}) =>
           type === 'paragraph' ? (
             <p key={text}>{text}</p>
           ) : type === 'link' ? (
