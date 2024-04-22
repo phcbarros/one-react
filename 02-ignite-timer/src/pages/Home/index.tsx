@@ -42,7 +42,7 @@ export function Home() {
 
   function handleCreateNewCycle(data: NewCycleFormData) {
     createNewCycle(data)
-    reset()
+    reset() // limpa o formulário para os valores iniciais definidos no defaultValues
   }
 
   const task = watch('task')

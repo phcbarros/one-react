@@ -24,6 +24,7 @@ export interface CyclesContextType {
   setSecondsPassed: (seconds: number) => void
   createNewCycle: (data: CreateCycleData) => void
   interruptCurrentCycle: () => void
+  resetActiveCycle: () => void
 }
 
 export const CyclesContext = createContext({} as CyclesContextType)
@@ -66,8 +67,6 @@ export function CyclesContextProvider({
     setCycles((state) => [...state, newCycle]) // alteração do estado dependeu do seu estado atual
     setActiveCycleId(newCycle.id)
     setAmountSecondsPassed(0)
-
-    //reset() // limpa o formulário para os valores iniciais definidos no defaultValues
   }
 
   function interruptCurrentCycle() {
@@ -78,6 +77,10 @@ export function CyclesContextProvider({
           : cycle,
       ),
     )
+    setActiveCycleId(null)
+  }
+
+  function resetActiveCycle() {
     setActiveCycleId(null)
   }
 
@@ -92,6 +95,7 @@ export function CyclesContextProvider({
         setSecondsPassed,
         createNewCycle,
         interruptCurrentCycle,
+        resetActiveCycle,
       }}>
       {children}
     </CyclesContext.Provider>
