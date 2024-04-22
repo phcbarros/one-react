@@ -1,8 +1,9 @@
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import {Play} from 'phosphor-react'
 import {useForm} from 'react-hook-form'
 import {zodResolver} from '@hookform/resolvers/zod'
 import * as zod from 'zod'
+import {differenceInSeconds} from 'date-fns'
 
 import {
   CountdownContainer,
@@ -31,6 +32,7 @@ interface Cycle {
   id: string
   task: string
   minutesAmount: number
+  startDate: Date
 }
 
 export function Home() {
@@ -51,6 +53,7 @@ export function Home() {
       id: String(new Date().getTime()),
       task: data.task,
       minutesAmount: data.minutesAmount,
+      startDate: new Date(),
     }
 
     setCycles((state) => [...state, newCycle]) // alteração do estado dependeu do seu estado
@@ -72,6 +75,22 @@ export function Home() {
 
   const task = watch('task')
   const isSubmitDisabled = !task
+
+  /*
+    useEffect()
+    - executa quando o componente é renderizado pela primeira vez
+    - executa sempre que o valor do array de dependências mudar
+    - não utilizar para atualizar o estado (ex aplicar filtros)
+  */
+  useEffect(() => {
+    if (activeCycle) {
+      setInterval(() => {
+        setAmountSecondsPassed(
+          differenceInSeconds(new Date(), activeCycle.startDate),
+        )
+      })
+    }
+  }, [activeCycle])
 
   return (
     <HomeContainer>
