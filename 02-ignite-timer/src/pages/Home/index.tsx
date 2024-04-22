@@ -13,7 +13,7 @@ import {
   TaskInput,
 } from './styles'
 
-// controlled = formulários simples com poucos campos em uma interface simples (login), tem maior fluidez, monitora o valor digitado em tempo real, exemplo usar useState
+// controlled = formulários simples com poucgos campos em uma interface simples (login), tem maior fluidez, monitora o valor digitado em tempo real, exemplo usar useState
 // uncontrolled = formulários complexos com muitos campos, tem menor fluidez, não monitora o valor digitado em tempo real, exemplo usar eventos para atualizar os valores
 
 const newCycleFormValidationSchema = zod.object({
@@ -24,12 +24,23 @@ const newCycleFormValidationSchema = zod.object({
     .max(60, 'O ciclo precisa ser de no máximo 60 minutos'),
 })
 
+// interface NewCycleForm {
+//   task: string
+//   minutesAmount: number
+// }
+
+type NewCycleForm = zod.infer<typeof newCycleFormValidationSchema> // precisa converter para o ts entender
+
 export function Home() {
-  const {register, handleSubmit, watch} = useForm({
+  const {register, handleSubmit, watch} = useForm<NewCycleForm>({
     resolver: zodResolver(newCycleFormValidationSchema),
+    defaultValues: {
+      task: '',
+      minutesAmount: 0,
+    },
   })
 
-  function handleCreateNewCycle(data: FieldValues) {
+  function handleCreateNewCycle(data: NewCycleForm) {
     console.log(data)
   }
 
