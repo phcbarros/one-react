@@ -35,6 +35,7 @@ interface Cycle {
   minutesAmount: number
   startDate: Date
   interruptedDate?: Date
+  finishedDate?: Date
 }
 
 export function Home() {
@@ -66,8 +67,8 @@ export function Home() {
   }
 
   function handleInterruptCycle() {
-    setCycles((cycles) =>
-      cycles.map((cycle) =>
+    setCycles((state) =>
+      state.map((cycle) =>
         cycle.id === activeCycleId
           ? {...cycle, interruptedDate: new Date()}
           : cycle,
@@ -105,21 +106,35 @@ export function Home() {
 
     if (activeCycle) {
       interval = setInterval(() => {
-        setAmountSecondsPassed(
-          differenceInSeconds(new Date(), activeCycle.startDate),
+        const secondsDifference = differenceInSeconds(
+          new Date(),
+          activeCycle.startDate,
         )
+
+        if (secondsDifference >= totalSeconds) {
+          setCycles((state) =>
+            state.map((cycle) =>
+              cycle.id === activeCycleId
+                ? {...cycle, finishedDate: new Date()}
+                : cycle,
+            ),
+          )
+          setActiveCycleId(null)
+          setAmountSecondsPassed(totalSeconds)
+          clearInterval(interval)
+        } else {
+          setAmountSecondsPassed(secondsDifference)
+        }
       })
     }
 
     return () => {
       clearInterval(interval)
     }
-  }, [activeCycle])
+  }, [activeCycle, activeCycleId, totalSeconds])
 
   const task = watch('task')
   const isSubmitDisabled = !task
-
-  console.log(cycles)
 
   return (
     <HomeContainer>
