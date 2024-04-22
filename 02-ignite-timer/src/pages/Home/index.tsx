@@ -1,5 +1,5 @@
 import {Play} from 'phosphor-react'
-import {type FieldValues, useForm} from 'react-hook-form'
+import {useForm} from 'react-hook-form'
 import {zodResolver} from '@hookform/resolvers/zod'
 import * as zod from 'zod'
 
@@ -13,7 +13,7 @@ import {
   TaskInput,
 } from './styles'
 
-// controlled = formulários simples com poucgos campos em uma interface simples (login), tem maior fluidez, monitora o valor digitado em tempo real, exemplo usar useState
+// controlled = formulários simples com poucos campos em uma interface simples (login), tem maior fluidez, monitora o valor digitado em tempo real, exemplo usar useState
 // uncontrolled = formulários complexos com muitos campos, tem menor fluidez, não monitora o valor digitado em tempo real, exemplo usar eventos para atualizar os valores
 
 const newCycleFormValidationSchema = zod.object({
@@ -32,7 +32,7 @@ const newCycleFormValidationSchema = zod.object({
 type NewCycleForm = zod.infer<typeof newCycleFormValidationSchema> // precisa converter para o ts entender
 
 export function Home() {
-  const {register, handleSubmit, watch} = useForm<NewCycleForm>({
+  const {register, handleSubmit, watch, reset} = useForm<NewCycleForm>({
     resolver: zodResolver(newCycleFormValidationSchema),
     defaultValues: {
       task: '',
@@ -42,6 +42,7 @@ export function Home() {
 
   function handleCreateNewCycle(data: NewCycleForm) {
     console.log(data)
+    reset() // limpa o formulário para os valores iniciais definidos no defaultValues
   }
 
   const task = watch('task')
