@@ -12,6 +12,7 @@
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
     "date-fns": "^3.6.0",
+    "immer": "^10.0.4",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.4",
     "phosphor-react": "^1.4.1",
