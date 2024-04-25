@@ -16,11 +16,11 @@ export interface CyclesState {
 }
 
 export type CyclesAction =
-  | {type: 'ADD_NEW_CYCLE'; payload: {newCycle: Cycle}}
-  | {type: 'INTERRUPT_CURRENT_CYCLE'}
-  | {type: 'MARK_CURRENT_CYCLE_AS_FINISHED'}
+  | {type: ActionTypes.ADD_NEW_CYCLE; payload: {newCycle: Cycle}}
+  | {type: ActionTypes.INTERRUPT_CURRENT_CYCLE}
+  | {type: ActionTypes.MARK_CURRENT_CYCLE_AS_FINISHED}
 
-export function cyclesReducer(state: CyclesState, action: any) {
+export function cyclesReducer(state: CyclesState, action: CyclesAction) {
   console.log(action)
   switch (action.type) {
     case ActionTypes.ADD_NEW_CYCLE:

@@ -1,5 +1,12 @@
 import {differenceInSeconds} from 'date-fns'
-import {createContext, useEffect, useReducer, useState} from 'react'
+import {
+  createContext,
+  useCallback,
+  useEffect,
+  useMemo,
+  useReducer,
+  useState,
+} from 'react'
 import {
   addNewCycleAction,
   interruptCurrentCycleAction,
@@ -69,15 +76,15 @@ export function CyclesContextProvider({
     return 0
   })
 
-  function markCurrentCycleAsFinished() {
+  const markCurrentCycleAsFinished = useCallback(() => {
     dispatch(markCurrentCycleAsFinishedAction())
-  }
+  }, [])
 
-  function setSecondsPassed(seconds: number) {
+  const setSecondsPassed = useCallback((seconds: number) => {
     setAmountSecondsPassed(seconds)
-  }
+  }, [])
 
-  function createNewCycle(data: CreateCycleData) {
+  const createNewCycle = useCallback((data: CreateCycleData) => {
     const newCycle: Cycle = {
       id: String(new Date().getTime()),
       task: data.task,
@@ -87,25 +94,35 @@ export function CyclesContextProvider({
 
     dispatch(addNewCycleAction(newCycle))
     setAmountSecondsPassed(0)
-  }
+  }, [])
 
-  function interruptCurrentCycle() {
+  const interruptCurrentCycle = useCallback(() => {
     dispatch(interruptCurrentCycleAction())
-  }
+  }, [])
 
+  const values = useMemo(
+    () => ({
+      cycles,
+      activeCycle,
+      activeCycleId,
+      amountSecondsPassed,
+      markCurrentCycleAsFinished,
+      setSecondsPassed,
+      createNewCycle,
+      interruptCurrentCycle,
+    }),
+    [
+      cycles,
+      activeCycle,
+      activeCycleId,
+      amountSecondsPassed,
+      markCurrentCycleAsFinished,
+      setSecondsPassed,
+      createNewCycle,
+      interruptCurrentCycle,
+    ],
+  )
   return (
-    <CyclesContext.Provider
-      value={{
-        cycles,
-        activeCycle,
-        activeCycleId,
-        amountSecondsPassed,
-        markCurrentCycleAsFinished,
-        setSecondsPassed,
-        createNewCycle,
-        interruptCurrentCycle,
-      }}>
-      {children}
-    </CyclesContext.Provider>
+    <CyclesContext.Provider value={values}>{children}</CyclesContext.Provider>
   )
 }
