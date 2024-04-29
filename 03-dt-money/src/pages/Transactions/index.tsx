@@ -1,11 +1,12 @@
 import {Header} from '../../components/Header'
+import {Summary} from '../../components/Summary'
 import {TransactionsContainer} from './styles'
 
 export function Transactions() {
   return (
     <TransactionsContainer>
       <Header />
-      <h1>Transactions</h1>
+      <Summary />
     </TransactionsContainer>
   )
 }
