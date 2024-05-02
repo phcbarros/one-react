@@ -1,0 +1,5 @@
+### listar todas as transações
+http://localhost:3333/transactions
+
+### filtrar saidas
+http://localhost:3333/transactions?type=outcome
