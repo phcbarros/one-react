@@ -1,8 +1,10 @@
 import {zodResolver} from '@hookform/resolvers/zod'
 import * as Dialog from '@radix-ui/react-dialog'
 import {ArrowCircleDown, ArrowCircleUp, X} from 'phosphor-react'
+import {useContext} from 'react'
 import {Controller, useForm} from 'react-hook-form'
 import * as z from 'zod'
+import {TransactionsContext} from '../../contexts/TransactionsContext'
 import {
   CloseButton,
   Content,
@@ -21,17 +23,19 @@ const newTransactionFormSchema = z.object({
 type NewTransactionFormInputs = z.infer<typeof newTransactionFormSchema>
 
 export function NewTransactionModal() {
+  const {createTransaction} = useContext(TransactionsContext)
+
   /**
    * Para componentes não padrões do HTML é necessário usar a abordagem de componentes controlados (controlled components)
    * Nesse caso é necessário usar o control e o componente Controller do React Hook Form
    * A propriedade field contém todas as informações do input e onChange contém a função de atualização e value
    */
-
   const {
     control,
     register,
     handleSubmit,
     formState: {isSubmitting},
+    reset,
   } = useForm<NewTransactionFormInputs>({
     defaultValues: {
       type: 'income',
@@ -41,7 +45,11 @@ export function NewTransactionModal() {
 
   async function handleCreateNewTransaction(data: NewTransactionFormInputs) {
     await new Promise((resolve) => setTimeout(resolve, 1000))
-    console.log(data)
+    const {description, price, category, type} = data
+
+    await createTransaction({description, price, category, type})
+
+    reset()
   }
 
   return (

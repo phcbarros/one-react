@@ -31,6 +31,30 @@
       "category": "Moradia",
       "price": 2000,
       "createdAt": "2024-03-02T16:52:53.062Z"
+    },
+    {
+      "description": "Remédios",
+      "price": 100,
+      "category": "Saúde",
+      "type": "outcome",
+      "createdAt": "2024-05-02T20:51:21.311Z",
+      "id": 5
+    },
+    {
+      "description": "Investimentos",
+      "price": 1000,
+      "category": "Investimentos",
+      "type": "income",
+      "createdAt": "2024-05-02T21:00:54.987Z",
+      "id": 6
+    },
+    {
+      "description": "Gasolina",
+      "price": 140,
+      "category": "Transporte",
+      "type": "outcome",
+      "createdAt": "2024-05-02T21:10:14.891Z",
+      "id": 7
     }
   ]
 }
