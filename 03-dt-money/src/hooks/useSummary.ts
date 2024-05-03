@@ -1,8 +1,10 @@
-import {useContext} from 'react'
+import {useContextSelector} from 'use-context-selector'
 import {TransactionsContext} from '../contexts/TransactionsContext'
 
 export function useSummary() {
-  const {transactions} = useContext(TransactionsContext)
+  const transactions = useContextSelector(TransactionsContext, (context) => {
+    return context.transactions
+  })
 
   /**
    * Nenhum outro lugar a aplicação precisa da informação do total de entradas, saídas e  total
