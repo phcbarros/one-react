@@ -11,7 +11,7 @@ export function useSummary() {
    * Nenhum outro lugar a aplicação precisa da informação do total de entradas, saídas e  total
    * */
   const summary = useMemo(() => {
-    transactions.reduce(
+    return transactions.reduce(
       (acc, transaction) => {
         if (transaction.type === 'income') {
           acc.income += transaction.price

@@ -22,6 +22,8 @@ interface TransactionsContextType {
   transactions: Transaction[]
   loadTransactions: (query?: string) => Promise<void>
   createTransaction: (data: CreateTransactionInput) => Promise<void>
+  isOpen: boolean
+  toggleModal: () => void
 }
 
 export const TransactionsContext = createContext({} as TransactionsContextType)
@@ -34,6 +36,7 @@ export function TransactionsContextProvider({
   children,
 }: Readonly<TransactionsContextProviderProps>) {
   const [transactions, setTransactions] = useState<Transaction[]>([])
+  const [isOpen, setIsOpen] = useState(false)
 
   const loadTransactions = useCallback(async (query?: string) => {
     const response = await api.get<Transaction[]>('transactions', {
@@ -72,8 +75,10 @@ export function TransactionsContextProvider({
       transactions,
       loadTransactions,
       createTransaction,
+      isOpen,
+      toggleModal: () => setIsOpen((state) => !state),
     }),
-    [transactions, loadTransactions, createTransaction],
+    [transactions, loadTransactions, createTransaction, isOpen],
   )
 
   return (

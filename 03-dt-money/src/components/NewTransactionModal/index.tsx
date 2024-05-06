@@ -30,6 +30,10 @@ export function NewTransactionModal() {
     },
   )
 
+  const {toggleModal} = useContextSelector(TransactionsContext, (context) => {
+    return {isOpen: context.isOpen, toggleModal: context.toggleModal}
+  })
+
   /**
    * Para componentes não padrões do HTML é necessário usar a abordagem de componentes controlados (controlled components)
    * Nesse caso é necessário usar o control e o componente Controller do React Hook Form
@@ -55,6 +59,7 @@ export function NewTransactionModal() {
     await createTransaction({description, price, category, type})
 
     reset()
+    toggleModal()
   }
 
   return (

@@ -55,6 +55,30 @@
       "type": "outcome",
       "createdAt": "2024-05-02T21:10:14.891Z",
       "id": 7
+    },
+    {
+      "description": "Curso",
+      "price": 1000,
+      "category": "Educação",
+      "type": "outcome",
+      "createdAt": "2024-05-06T14:20:06.209Z",
+      "id": 8
+    },
+    {
+      "description": "Investimentos",
+      "price": 2000,
+      "category": "Investimentos",
+      "type": "income",
+      "createdAt": "2024-05-06T14:22:02.405Z",
+      "id": 9
+    },
+    {
+      "description": "Gasolina",
+      "price": 200,
+      "category": "Combustível",
+      "type": "outcome",
+      "createdAt": "2024-05-06T18:06:50.253Z",
+      "id": 10
     }
   ]
 }
