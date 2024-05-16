@@ -13,7 +13,11 @@ export interface PaginationProps {
   perPage: number
 }
 
-export function Pagination({pageIndex, perPage, totalCount}: PaginationProps) {
+export function Pagination({
+  pageIndex,
+  perPage,
+  totalCount,
+}: Readonly<PaginationProps>) {
   const pages = Math.ceil(totalCount / perPage) || 1
 
   return (
