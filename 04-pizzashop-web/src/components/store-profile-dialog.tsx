@@ -24,7 +24,7 @@ import {Textarea} from './ui/text-area'
 
 const storeProfileFormSchema = z.object({
   name: z.string().min(1, 'O nome é obrigatório'),
-  description: z.string().min(1, 'A descrição é obrigatória'),
+  description: z.string().min(1, 'A descrição é obrigatória').nullable(),
 })
 
 type StoreProfileSchema = z.infer<typeof storeProfileFormSchema>
@@ -51,26 +51,49 @@ export function StoreProfileDialog() {
     },
   })
 
+  function updateManagedRestaurantCache({
+    name,
+    description,
+  }: StoreProfileSchema) {
+    const cached = queryClient.getQueryData<GetManagedRestaurantResponse>([
+      'managed-restaurant',
+    ])
+
+    if (cached) {
+      queryClient.setQueryData<GetManagedRestaurantResponse>(
+        ['managed-restaurant'],
+        {
+          ...cached,
+          name,
+          description,
+        },
+      )
+    }
+
+    return {cached}
+  }
+
   const {mutateAsync: updateProfileFn} = useMutation({
     mutationFn: updateProfile,
-    onSuccess: (_, variables) => {
-      const cached = queryClient.getQueryData<GetManagedRestaurantResponse>([
-        'managed-restaurant',
-      ])
+    onMutate({name, description}) {
+      const {cached} = updateManagedRestaurantCache({name, description})
 
-      if (cached) {
-        queryClient.setQueryData<GetManagedRestaurantResponse>(
-          ['managed-restaurant'],
-          {
-            ...cached,
-            name: variables.name,
-            description: variables.description,
-          },
+      return {previousProfile: cached}
+    },
+    onError(_, __, context) {
+      if (context?.previousProfile) {
+        updateManagedRestaurantCache(
+          context.previousProfile as StoreProfileSchema,
         )
       }
     },
   })
 
+  /**
+   * interface otimista quando atualiza a interface sem esperar a resposta do backend
+   * usado em cenários onde a resposta do backend tem grandes chances de darem sucesso
+   * caso dê erro informa que deu erro e retorna para o estado anterior
+   */
   async function handleUpdateProfile(data: StoreProfileSchema) {
     try {
       await updateProfileFn({
