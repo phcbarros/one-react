@@ -4,4 +4,5 @@ import {env} from '@/env'
 
 export const api = axios.create({
   baseURL: env.VITE_API_BASE_URL,
+  withCredentials: true, // enable cookies
 })
