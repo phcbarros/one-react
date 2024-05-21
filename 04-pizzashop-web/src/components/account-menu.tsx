@@ -18,15 +18,17 @@ import {
 import {Skeleton} from './ui/skeleton'
 
 export function AccountMenu() {
-  const {data: profile, isLoading: isLoadindProfile} = useQuery({
+  const {data: profile, isLoading: isLoadingProfile} = useQuery({
     queryKey: ['profile'],
     queryFn: getProfile,
+    staleTime: Number.POSITIVE_INFINITY, // não muda constantemente
   })
 
   const {data: managedRestaurant, isLoading: isLoadingManagedRestaurant} =
     useQuery({
       queryKey: ['managed-restaurant'],
       queryFn: getManagedRestaurant,
+      staleTime: Number.POSITIVE_INFINITY,
     })
 
   return (
@@ -46,7 +48,7 @@ export function AccountMenu() {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-56">
           <DropdownMenuLabel className="flex flex-col">
-            {isLoadindProfile ? (
+            {isLoadingProfile ? (
               <div className="space-y-1.5">
                 <Skeleton className="h-4 w-32" />
                 <Skeleton className="h-3 w-24" />
