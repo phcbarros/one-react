@@ -1,11 +1,14 @@
 import {zodResolver} from '@hookform/resolvers/zod'
 import {DialogClose, DialogDescription} from '@radix-ui/react-dialog'
-import {useMutation, useQuery} from '@tanstack/react-query'
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query'
 import {useForm} from 'react-hook-form'
 import {toast} from 'sonner'
 import * as z from 'zod'
 
-import {getManagedRestaurant} from '@/api/get-managed-restaurant'
+import {
+  getManagedRestaurant,
+  type GetManagedRestaurantResponse,
+} from '@/api/get-managed-restaurant'
 import {updateProfile} from '@/api/update-profile'
 
 import {Button} from './ui/button'
@@ -27,6 +30,8 @@ const storeProfileFormSchema = z.object({
 type StoreProfileSchema = z.infer<typeof storeProfileFormSchema>
 
 export function StoreProfileDialog() {
+  const queryClient = useQueryClient()
+
   const {data: managedRestaurant} = useQuery({
     queryKey: ['managed-restaurant'],
     queryFn: getManagedRestaurant,
@@ -37,7 +42,6 @@ export function StoreProfileDialog() {
     register,
     handleSubmit,
     formState: {isSubmitting},
-    reset,
   } = useForm<StoreProfileSchema>({
     resolver: zodResolver(storeProfileFormSchema),
     values: {
@@ -49,6 +53,22 @@ export function StoreProfileDialog() {
 
   const {mutateAsync: updateProfileFn} = useMutation({
     mutationFn: updateProfile,
+    onSuccess: (_, variables) => {
+      const cached = queryClient.getQueryData<GetManagedRestaurantResponse>([
+        'managed-restaurant',
+      ])
+
+      if (cached) {
+        queryClient.setQueryData<GetManagedRestaurantResponse>(
+          ['managed-restaurant'],
+          {
+            ...cached,
+            name: variables.name,
+            description: variables.description,
+          },
+        )
+      }
+    },
   })
 
   async function handleUpdateProfile(data: StoreProfileSchema) {
@@ -59,7 +79,6 @@ export function StoreProfileDialog() {
       })
 
       console.log(data)
-      reset()
       toast.success('Perfil atualizado com sucesso!')
     } catch (error) {
       toast.error('Falha ao atualizar perfil, tente novamente!')
