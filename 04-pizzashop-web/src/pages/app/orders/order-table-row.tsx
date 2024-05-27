@@ -1,10 +1,14 @@
+import {useMutation} from '@tanstack/react-query'
 import {formatDistanceToNow} from 'date-fns'
 import {ptBR} from 'date-fns/locale/pt-BR'
 import {ArrowRight, Search, X} from 'lucide-react'
 import {useState} from 'react'
 
+import {cancelOrder} from '@/api/cancel-order'
+import type {GetOrdersResponse} from '@/api/get-orders'
 import {OrderStatus} from '@/components/order-status'
 import {Dialog, DialogTrigger} from '@/components/ui/dialog'
+import {queryClient} from '@/lib/react-query'
 
 import {Button} from '../../../components/ui/button'
 import {TableCell, TableRow} from '../../../components/ui/table'
@@ -20,8 +24,37 @@ export type OrderTableRowProps = {
   }
 }
 
-export function OrderTableRow({order}: OrderTableRowProps) {
+export function OrderTableRow({order}: Readonly<OrderTableRowProps>) {
   const [isDetailOpen, setIsDetailOpen] = useState(false)
+
+  const {mutateAsync: cancelOrderFn} = useMutation({
+    mutationFn: cancelOrder,
+    async onSuccess(_, {orderId}) {
+      const ordersLitCached = queryClient.getQueriesData<GetOrdersResponse>({
+        queryKey: ['orders'],
+      })
+
+      // biome-ignore lint/complexity/noForEach: <explanation>
+      ordersLitCached.forEach(([cacheKey, cacheData]) => {
+        if (!cacheData) {
+          return
+        }
+
+        queryClient.setQueryData<GetOrdersResponse>(cacheKey, {
+          ...cacheData,
+          orders: cacheData.orders.map((order) => {
+            if (order.orderId === orderId) {
+              return {
+                ...order,
+                status: 'canceled',
+              }
+            }
+            return order
+          }),
+        })
+      })
+    },
+  })
 
   return (
     <TableRow>
@@ -62,7 +95,11 @@ export function OrderTableRow({order}: OrderTableRowProps) {
         </Button>
       </TableCell>
       <TableCell>
-        <Button variant="ghost" size="xs">
+        <Button
+          disabled={!['pending', 'processing'].includes(order.status)}
+          onClick={() => cancelOrderFn({orderId: order.orderId})}
+          variant="ghost"
+          size="xs">
           <X className="mr-2 w-3 h-3" />
           Cancelar
         </Button>
