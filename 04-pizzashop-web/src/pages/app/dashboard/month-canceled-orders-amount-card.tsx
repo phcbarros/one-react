@@ -8,6 +8,7 @@ export function MonthCanceledOrdersAmountCard() {
   const {data: monthCanceledOrdersAmount} = useQuery({
     queryKey: ['metrics', 'month-canceled-orders-amount'],
     queryFn: getMonthCanceledOrdersAmount,
+    staleTime: 1000 * 60 * 5,
   })
 
   return (
