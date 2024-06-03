@@ -14,7 +14,7 @@ export const registerRestaurantMock = http.post<never, RegisterRestaurantBody>(
     }
 
     return new HttpResponse(null, {
-      status: 401,
+      status: 400,
     })
   },
 )
