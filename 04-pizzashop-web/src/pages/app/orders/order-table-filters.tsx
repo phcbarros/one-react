@@ -92,11 +92,13 @@ export function OrderTableFilters() {
       <Input
         placeholder="ID do pedido"
         className="h-8 w-auto"
+        data-testid="order-id"
         {...register('orderId')}
       />
       <Input
         placeholder="Nome do cliente"
         className="h-8 w-[320px]"
+        data-testid="customer-name"
         {...register('customerName')}
       />
 
