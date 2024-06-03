@@ -1,6 +1,6 @@
 import {api} from '@/lib/axios'
 
-type GetPopularProductsResponse = {
+export type GetPopularProductsResponse = {
   product: string
   amount: number
 }[]
