@@ -15,12 +15,13 @@ test('update profile successfully', async ({page}) => {
 
   const toast = page.getByText('Perfil atualizado com sucesso!')
 
-  expect(toast).toBeVisible()
+  await expect(toast).toBeVisible()
 
   await page.getByRole('button', {name: 'Close'}).click()
-  await page.waitForTimeout(250)
 
-  expect(page.getByRole('button', {name: 'Pizza Planet'})).toBeInViewport()
+  await expect(
+    page.getByRole('button', {name: 'Pizza Planet'}),
+  ).toBeInViewport()
 })
 
 test('update profile with error', async ({page}) => {
@@ -38,10 +39,9 @@ test('update profile with error', async ({page}) => {
 
   const toast = page.getByText('Falha ao atualizar perfil, tente novamente!')
 
-  expect(toast).toBeVisible()
+  await expect(toast).toBeVisible()
 
   await page.getByRole('button', {name: 'Close'}).click()
-  await page.waitForTimeout(250)
 
-  expect(page.getByRole('button', {name: 'Pizza Shop'})).toBeInViewport()
+  await expect(page.getByRole('button', {name: 'Pizza Shop'})).toBeInViewport()
 })
