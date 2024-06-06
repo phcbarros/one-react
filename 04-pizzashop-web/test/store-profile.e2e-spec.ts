@@ -1,5 +1,4 @@
 import {expect, test} from '@playwright/test'
-import exp from 'constants'
 
 test('update profile successfully', async ({page}) => {
   await page.goto('/', {waitUntil: 'networkidle'})
@@ -12,7 +11,7 @@ test('update profile successfully', async ({page}) => {
 
   await page.getByRole('button', {name: 'Salvar'}).click()
 
-  await page.waitForLoadState('networkidle')
+  await page.waitForLoadState('networkidle') // esperar a atualização dos dados
 
   const toast = page.getByText('Perfil atualizado com sucesso!')
 
