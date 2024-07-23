@@ -4,7 +4,7 @@ import {
   ProductContainer,
   ProductDetail,
 } from '@/styles/pages/product'
-import {GetStaticProps} from 'next'
+import {GetStaticPaths, GetStaticProps} from 'next'
 import Image from 'next/image'
 import Stripe from 'stripe'
 
@@ -39,10 +39,18 @@ export default function Product({product}: ProductProps) {
 }
 
 /**
+ * SSR ou SSG
  * Os dados que vou carregar são atemporais? Sim
  * Os dados que vou carregar dependem de algum contexto de execução da página? Exemplo: cookies, dados do usuário, contexto atual, etc - Não
  * R: SSG se não então SSR
  */
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: [{params: {id: 'prod_QWlXj7bIbsCjce'}}],
+    fallback: false,
+  }
+}
 
 export const getStaticProps: GetStaticProps<any, {id: string}> = async ({
   params,
