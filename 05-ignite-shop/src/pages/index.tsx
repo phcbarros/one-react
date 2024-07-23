@@ -18,6 +18,7 @@ interface HomeProps {
 }
 
 // importante informar a altura e a largura da imagem
+// cuidado com o prefetch quando tem muitos links na página
 export default function Home({products}: Readonly<HomeProps>) {
   const [sliderRef] = useKeenSlider({
     slides: {
@@ -30,7 +31,10 @@ export default function Home({products}: Readonly<HomeProps>) {
     <HomeContainer ref={sliderRef} className="keen-slider">
       {products.map((product) => {
         return (
-          <Link href={`/product/${product.id}`} key={product.id}>
+          <Link
+            href={`/product/${product.id}`}
+            key={product.id}
+            prefetch={false}>
             <Product className="keen-slider__slide">
               <Image src={product.imageUrl} width={520} height={480} alt="" />
               <footer>
