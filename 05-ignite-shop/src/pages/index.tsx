@@ -33,12 +33,7 @@ export default function Home({products}: Readonly<HomeProps>) {
             <Image src={product.imageUrl} width={520} height={480} alt="" />
             <footer>
               <strong>{product.name}</strong>
-              <span>
-                {Number(product.price).toLocaleString('pt-BR', {
-                  style: 'currency',
-                  currency: 'BRL',
-                })}
-              </span>
+              <span>{product.price}</span>
             </footer>
           </Product>
         )
@@ -68,7 +63,10 @@ export const getStaticProps: GetStaticProps = async () => {
       name: product.name,
       imageUrl: product.images[0],
       description: product.description,
-      price: price.unit_amount ? price.unit_amount / 100 : 0,
+      price: new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+      }).format(price.unit_amount ? price.unit_amount / 100 : 0),
     }
   })
 
