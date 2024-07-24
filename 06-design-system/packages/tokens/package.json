@@ -11,8 +11,9 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
+    "@phcbarros-ignite-iu/ts-config": "*",
     "tsup": "^8.2.2",
     "typescript": "^5.5.4"
   }
