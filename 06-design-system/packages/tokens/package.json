@@ -1,5 +1,5 @@
 {
-  "name": "@phcbarros-ignite-iu/tokens",
+  "name": "@phcbarros-ignite-ui/tokens",
   "version": "1.0.0",
   "description": "",
   "main": "./dist/index.js",
@@ -7,13 +7,15 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "build": "tsup src/index.ts --format esm,cjs --dts",
-    "dev": "tsup src/index.ts --format esm,cjs --dts --watch"
+    "dev": "tsup src/index.ts --format esm,cjs --dts --watch",
+    "lint": "eslint src/**/*.ts* --fix"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@phcbarros-ignite-iu/ts-config": "*",
+    "@phcbarros-ignite-ui/eslint-config": "*",
+    "@phcbarros-ignite-ui/ts-config": "*",
     "tsup": "^8.2.2",
     "typescript": "^5.5.4"
   }

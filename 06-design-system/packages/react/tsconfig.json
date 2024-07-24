@@ -1,4 +1,4 @@
 {
-  "extends": "@phcbarros-ignite-iu/ts-config/react.json",
+  "extends": "@phcbarros-ignite-ui/ts-config/react.json",
   "include": ["src"]
 }

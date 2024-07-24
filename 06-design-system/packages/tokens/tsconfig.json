@@ -1,4 +1,4 @@
 {
-  "extends": "@phcbarros-ignite-iu/ts-config/base.json",
+  "extends": "@phcbarros-ignite-ui/ts-config/base.json",
   "include": ["src"]
 }
