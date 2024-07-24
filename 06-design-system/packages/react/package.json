@@ -1,5 +1,5 @@
 {
-  "name": "@phcbarros-ignite-iu/tokens",
+  "name": "@phcbarros-ignite-iu/react",
   "version": "1.0.0",
   "description": "",
   "main": "./dist/index.js",
@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@phcbarros-ignite-iu/tokens": "*",
     "tsup": "^8.2.2",
     "typescript": "^5.5.4"
   }
