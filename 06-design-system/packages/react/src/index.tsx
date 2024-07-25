@@ -1,2 +1,3 @@
-export * from './components/box'
-export * from './components/text'
+export * from './components/Box'
+export * from './components/Heading'
+export * from './components/Text'
