@@ -2,7 +2,7 @@ import {Box, Text, TextInput, TextInputProps} from '@phcbarros-ignite-ui/react'
 import {Meta, StoryObj} from '@storybook/react'
 
 export default {
-  title: 'Form/TextInput',
+  title: 'Form/Text Input',
   component: TextInput,
   args: {},
   decorators: [
