@@ -5,6 +5,14 @@ export default {
   title: 'Form/Checkbox',
   component: Checkbox,
   args: {},
+  argTypes: {
+    checked: {
+      action: 'checked change',
+      control: {
+        type: 'boolean',
+      },
+    },
+  },
   decorators: [
     (Story) => {
       return (
