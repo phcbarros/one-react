@@ -85,3 +85,5 @@ export const Button = styled('button', {
 })
 
 export type ButtonProps = ComponentProps<typeof Button>
+
+Button.displayName = 'Button'
