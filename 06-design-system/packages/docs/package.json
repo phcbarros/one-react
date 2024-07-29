@@ -10,7 +10,8 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "dev": "storybook dev -p 6006",
-    "build": "storybook build"
+    "build": "storybook build",
+    "deploy-storybook": "storybook-to-ghpages"
   },
   "dependencies": {
     "@storybook/addon-a11y": "^8.2.6",
@@ -32,6 +33,7 @@
     "@storybook/blocks": "^8.2.6",
     "@storybook/react": "^8.2.6",
     "@storybook/react-vite": "^8.2.6",
+    "@storybook/storybook-deployer": "^2.8.16",
     "@storybook/test": "^8.2.6",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
