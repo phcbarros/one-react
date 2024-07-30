@@ -6,9 +6,13 @@
   "scripts": {
     "dev": "turbo run dev --parallel",
     "build": "turbo run build",
-    "lint": "turbo run lint"
+    "lint": "turbo run lint",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "turbo run build --filter=packages/docs && changeset publish"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.27.7",
     "turbo": "^2.0.9"
   },
   "packageManager": "npm@10.5.0",
