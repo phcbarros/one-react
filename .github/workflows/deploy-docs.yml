@@ -17,6 +17,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: npm
+          cache-dependency-path: ./06-design-system/package-lock.json
 
       - run: npm ci
         working-directory: ./06-design-system
