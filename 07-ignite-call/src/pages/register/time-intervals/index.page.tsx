@@ -9,6 +9,7 @@ import {
   Text,
   TextInput,
 } from '@ignite-ui/react'
+import axios from 'axios'
 import {ArrowRight} from 'phosphor-react'
 import {Controller, useFieldArray, useForm} from 'react-hook-form'
 import {z} from 'zod'
@@ -130,9 +131,12 @@ export default function TimeIntervals() {
 
   const intervals = watch('intervals')
 
-  async function handleSetTimeIntervals(data: any) {
+  async function handleSetTimeIntervals(data: unknown) {
     const formData = data as TimeIntervalsFormDataOutput
-    console.log(data)
+
+    await axios.post('/api/users/time-intervals', {
+      time_intervals: formData.intervals,
+    })
   }
 
   console.log(errors)

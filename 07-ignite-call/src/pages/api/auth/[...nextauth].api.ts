@@ -3,7 +3,7 @@ import {NextApiRequest, NextApiResponse} from 'next'
 import NextAuth, {NextAuthOptions} from 'next-auth'
 import GoogleProvider, {GoogleProfile} from 'next-auth/providers/google'
 
-export function buildAuthOptions(
+export function buildNextAuthOptions(
   req: NextApiRequest,
   res: NextApiResponse,
 ): NextAuthOptions {
@@ -57,5 +57,5 @@ export function buildAuthOptions(
 }
 
 export default async function auth(req: NextApiRequest, res: NextApiResponse) {
-  return await NextAuth(req, res, buildAuthOptions(req, res))
+  return await NextAuth(req, res, buildNextAuthOptions(req, res))
 }
