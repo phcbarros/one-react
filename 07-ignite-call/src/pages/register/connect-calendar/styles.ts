@@ -27,7 +27,7 @@ export const ConnectBox = styled(Box, {
 
 export const ConnectItem = styled('div', {
   display: 'flex',
-  alignItems: 'center',
+  alignItems: 'baseline',
   justifyContent: 'space-between',
 
   border: '1px solid $gray600',
@@ -42,6 +42,11 @@ export const ConnectItem = styled('div', {
 
   [`${Text}`]: {
     color: '$gray200',
-    marginBottom: '$2',
+    marginBottom: '$4',
   },
+})
+
+export const AuthError = styled(Text, {
+  color: '#f75a68',
+  marginBottom: '$4',
 })
