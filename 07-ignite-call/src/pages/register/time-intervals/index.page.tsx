@@ -132,11 +132,14 @@ export default function TimeIntervals() {
   const intervals = watch('intervals')
 
   async function handleSetTimeIntervals(data: unknown) {
-    const formData = data as TimeIntervalsFormDataOutput
-
-    await axios.post('/api/users/time-intervals', {
-      time_intervals: formData.intervals,
-    })
+    try {
+      const formData = data as TimeIntervalsFormDataOutput
+      await axios.post('/api/users/time-intervals', {
+        intervals: formData.intervals,
+      })
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   console.log(errors)
