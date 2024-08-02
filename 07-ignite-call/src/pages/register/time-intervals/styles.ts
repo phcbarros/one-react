@@ -58,3 +58,8 @@ export const IntervalInputs = styled('div', {
     filter: 'invert(100%) brightness(50%)',
   },
 })
+
+export const FormError = styled(Text, {
+  color: '#f75a68',
+  marginBottom: '$4',
+})
