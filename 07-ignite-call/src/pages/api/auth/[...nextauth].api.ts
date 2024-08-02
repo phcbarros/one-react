@@ -35,6 +35,7 @@ export function buildAuthOptions(
 
     callbacks: {
       async signIn({account}) {
+        // verificar as permissões
         if (
           !account?.scope?.includes('https://www.googleapis.com/auth/calendar')
         ) {
@@ -42,6 +43,14 @@ export function buildAuthOptions(
         }
 
         return true
+      },
+
+      // retornar mais dados do usuário para o NextAuth
+      async session({session, user}) {
+        return {
+          ...session,
+          user,
+        }
       },
     },
   }
