@@ -15,17 +15,19 @@ export function Calendar() {
   return (
     <CalendarContainer>
       <CalendarHeader>
-        <CalendarTitle>Agosto de 2024</CalendarTitle>
+        <CalendarTitle>
+          <span>Agosto</span> de 2024
+        </CalendarTitle>
+        <CalendarActions>
+          <button>
+            <CaretLeft />
+          </button>
+          <button>
+            <CaretRight />
+          </button>
+        </CalendarActions>
       </CalendarHeader>
 
-      <CalendarActions>
-        <button>
-          <CaretLeft />
-        </button>
-        <button>
-          <CaretRight />
-        </button>
-      </CalendarActions>
       <CalendarBody>
         <thead>
           <tr>
@@ -39,12 +41,24 @@ export function Calendar() {
             <td>
               <CalendarDay>1</CalendarDay>
             </td>
-            <td>2</td>
-            <td>3</td>
-            <td>4</td>
-            <td>5</td>
-            <td>6</td>
-            <td>7</td>
+            <td>
+              <CalendarDay>2</CalendarDay>
+            </td>
+            <td>
+              <CalendarDay>3</CalendarDay>
+            </td>
+            <td>
+              <CalendarDay>4</CalendarDay>
+            </td>
+            <td>
+              <CalendarDay>5</CalendarDay>
+            </td>
+            <td>
+              <CalendarDay>6</CalendarDay>
+            </td>
+            <td>
+              <CalendarDay>7</CalendarDay>
+            </td>
           </tr>
         </tbody>
       </CalendarBody>
