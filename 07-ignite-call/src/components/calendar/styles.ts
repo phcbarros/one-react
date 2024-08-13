@@ -15,6 +15,7 @@ export const CalendarHeader = styled('div', {
 
 export const CalendarTitle = styled(Text, {
   fontWeight: '$medium',
+  textTransform: 'capitalize',
 
   span: {
     color: '$gray200',
@@ -27,9 +28,9 @@ export const CalendarActions = styled('div', {
   color: '$gray200',
 
   button: {
-    all: 'unset', // reset all button styles
+    all: 'unset',
     cursor: 'pointer',
-    lineHeight: 0, // reset quando o botão é somente um ícone
+    lineHeight: 0,
     borderRadius: '$sm',
 
     svg: {
@@ -42,16 +43,16 @@ export const CalendarActions = styled('div', {
     },
 
     '&:focus': {
-      boxShadow: '0 0 0 2px $colors$gray100', // hack stitches
+      boxShadow: '0 0 0 2px $colors$gray100',
     },
   },
 })
 
 export const CalendarBody = styled('table', {
-  width: '100%', // table por padrão não ocupa 100% do espaço e não herda a fonte
+  width: '100%',
   fontFamily: '$default',
   borderSpacing: '0.25rem',
-  tableLayout: 'fixed', // fixa o tamanho das colunas
+  tableLayout: 'fixed',
 
   'thead th': {
     color: '$gray200',
@@ -60,8 +61,8 @@ export const CalendarBody = styled('table', {
   },
 
   'tbody:before': {
-    content: '.',
     lineHeight: '0.75rem',
+    content: '.',
     display: 'block',
     color: '$gray800',
   },
@@ -74,7 +75,7 @@ export const CalendarBody = styled('table', {
 export const CalendarDay = styled('button', {
   all: 'unset',
   width: '100%',
-  aspectRatio: '1 / 1', // define mesma altura e mesma largura
+  aspectRatio: '1 / 1',
   background: '$gray600',
   textAlign: 'center',
   cursor: 'pointer',
