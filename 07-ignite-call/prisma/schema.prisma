@@ -65,8 +65,8 @@ model Session {
 model UserTimeInterval {
   id                    String @id @default(uuid())
   week_day              Int
-  start_time_in_minutes Int
-  end_time_in_minutes   Int
+  time_start_in_minutes Int
+  time_end_in_minutes   Int
 
   user_id String
   user    User   @relation(fields: [user_id], references: [id])

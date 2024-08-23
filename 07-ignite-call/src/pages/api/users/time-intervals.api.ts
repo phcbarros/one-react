@@ -33,15 +33,14 @@ export default async function handler(
   }
 
   const {intervals} = timeIntervalsBodySchema.parse(req.body)
-  console.log(intervals)
 
   await Promise.all(
     intervals.map((interval) => {
       return prisma.userTimeInterval.create({
         data: {
           week_day: interval.weekDay,
-          start_time_in_minutes: interval.startTimeInMinutes,
-          end_time_in_minutes: interval.endTimeInMinutes,
+          time_start_in_minutes: interval.startTimeInMinutes,
+          time_end_in_minutes: interval.endTimeInMinutes,
           user_id: session.user?.id,
         },
       })
