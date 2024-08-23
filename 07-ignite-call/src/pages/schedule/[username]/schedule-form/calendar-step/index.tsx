@@ -18,9 +18,7 @@ interface Availability {
 
 export function CalendarStep() {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null)
-  const [availability, setAvailability] = useState<Availability>(
-    {} as Availability,
-  )
+  const [availability, setAvailability] = useState<Availability | null>(null)
 
   const isDateSelected = !!selectedDate
 
@@ -57,7 +55,15 @@ export function CalendarStep() {
           </TimePickerHeader>
 
           <TimePickerList>
-            <TimePickerItem>08:00</TimePickerItem>
+            {availability?.possibleTimes.map((hour) => {
+              return (
+                <TimePickerItem
+                  key={hour}
+                  disabled={!availability.availableTimes.includes(hour)}>
+                  {String(hour).padStart(2, '0')}:00h
+                </TimePickerItem>
+              )
+            })}
           </TimePickerList>
         </TimePicker>
       )}
