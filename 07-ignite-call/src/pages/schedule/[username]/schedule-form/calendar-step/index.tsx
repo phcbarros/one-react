@@ -19,6 +19,7 @@ interface Availability {
 
 export interface BlockedDates {
   blockedWeekDays: number[]
+  blockedDates: number[]
 }
 
 export function CalendarStep() {
@@ -63,7 +64,7 @@ export function CalendarStep() {
       const response = await api.get(`/users/${username}/blocked-dates`, {
         params: {
           year: dayjs(selectedDate)?.get('year'),
-          month: dayjs(selectedDate)?.get('month'),
+          month: dayjs(selectedDate)?.get('month') + 1,
         },
       })
 
