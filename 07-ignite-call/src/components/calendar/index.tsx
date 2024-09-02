@@ -1,8 +1,6 @@
-import {api} from '@/lib/axios'
+import {BlockedDates} from '@/pages/schedule/[username]/schedule-form/calendar-step'
 import {getWeekDays} from '@/utils/get-week-days'
-import {useQuery} from '@tanstack/react-query'
 import dayjs from 'dayjs'
-import {useRouter} from 'next/router'
 import {CaretLeft, CaretRight} from 'phosphor-react'
 import {useMemo, useState} from 'react'
 import {
@@ -25,21 +23,25 @@ interface CalendarWeek {
 type CalendarWeeks = CalendarWeek[]
 
 interface CalendarProps {
+  blockedDates: BlockedDates | undefined
   onSelectedDate: (date: Date) => void
 }
 
-interface BlockedDates {
-  blockedWeekDays: number[]
-}
+// interface BlockedDates {
+//   blockedWeekDays: number[]
+// }
 
-export function Calendar({onSelectedDate}: Readonly<CalendarProps>) {
+export function Calendar({
+  onSelectedDate,
+  blockedDates,
+}: Readonly<CalendarProps>) {
   const weekDays = getWeekDays({short: true})
   const [currentDate, setCurrentDate] = useState(() => {
     return dayjs().set('date', 1)
   })
 
-  const router = useRouter()
-  const username = String(router.query.username)
+  // const router = useRouter()
+  // const username = String(router.query.username)
 
   const currentMonth = currentDate.format('MMMM')
   const currentYear = currentDate.format('YYYY')
@@ -54,26 +56,31 @@ export function Calendar({onSelectedDate}: Readonly<CalendarProps>) {
     setCurrentDate(nextMonth)
   }
 
-  const {data: blockedDates} = useQuery<BlockedDates>({
-    queryKey: [
-      'blocked-dates',
-      username,
-      currentDate.get('year'),
-      currentDate.get('month'),
-    ],
-    queryFn: async () => {
-      const response = await api.get(`/users/${username}/blocked-dates`, {
-        params: {
-          year: currentDate.get('year'),
-          month: currentDate.get('month'),
-        },
-      })
+  // // mover para fora do componente
+  // const {data: blockedDates} = useQuery<BlockedDates>({
+  //   queryKey: [
+  //     'blocked-dates',
+  //     username,
+  //     currentDate.get('year'),
+  //     currentDate.get('month'),
+  //   ],
+  //   queryFn: async () => {
+  //     const response = await api.get(`/users/${username}/blocked-dates`, {
+  //       params: {
+  //         year: currentDate.get('year'),
+  //         month: currentDate.get('month'),
+  //       },
+  //     })
 
-      return response.data
-    },
-  })
+  //     return response.data
+  //   },
+  // })
 
   const calendarWeeks = useMemo(() => {
+    if (!blockedDates) {
+      return []
+    }
+
     const daysInMonthArray = Array.from({
       length: currentDate.daysInMonth(),
     }).map((_, i) => {
@@ -109,7 +116,7 @@ export function Calendar({onSelectedDate}: Readonly<CalendarProps>) {
           date,
           disabled:
             date.endOf('day').isBefore(new Date()) ||
-            blockedDates?.blockedWeekDays.includes(date.get('day')),
+            blockedDates.blockedWeekDays.includes(date.get('day')),
         }
       }),
       ...nextMonthFillArray.map((date) => {

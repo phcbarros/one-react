@@ -17,6 +17,10 @@ interface Availability {
   availableTimes: number[]
 }
 
+export interface BlockedDates {
+  blockedWeekDays: number[]
+}
+
 export function CalendarStep() {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null)
 
@@ -48,9 +52,28 @@ export function CalendarStep() {
     enabled: !!selectedDate,
   })
 
+  const {data: blockedDates} = useQuery<BlockedDates>({
+    queryKey: [
+      'blocked-dates',
+      username,
+      dayjs(selectedDate)?.get('year'),
+      dayjs(selectedDate)?.get('month'),
+    ],
+    queryFn: async () => {
+      const response = await api.get(`/users/${username}/blocked-dates`, {
+        params: {
+          year: dayjs(selectedDate)?.get('year'),
+          month: dayjs(selectedDate)?.get('month'),
+        },
+      })
+
+      return response.data
+    },
+  })
+
   return (
     <Container isTimePickerOpen={isDateSelected}>
-      <Calendar onSelectedDate={setSelectedDate} />
+      <Calendar onSelectedDate={setSelectedDate} blockedDates={blockedDates} />
 
       {isDateSelected && (
         <TimePicker>
