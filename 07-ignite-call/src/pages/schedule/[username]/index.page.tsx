@@ -2,7 +2,7 @@ import {prisma} from '@/lib/prisma'
 import {Avatar, Heading, Text} from '@ignite-ui/react'
 import {GetStaticPaths, GetStaticProps} from 'next'
 // import {ScheduleForm} from './schedule-form'
-import {CalendarStep} from './schedule-form/calendar-step'
+import {ScheduleForm} from './schedule-form'
 import {Container, UserHeader} from './styles'
 
 const ONE_DAY_IN_SECONDS = 60 * 60 * 24 // 1 dia
@@ -24,7 +24,7 @@ export default function Schedule({user}: Readonly<ScheduleProps>) {
         <Text>{user.bio}</Text>
       </UserHeader>
 
-      <CalendarStep />
+      <ScheduleForm />
     </Container>
   )
 }

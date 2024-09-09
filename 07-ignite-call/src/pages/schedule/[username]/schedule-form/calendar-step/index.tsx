@@ -22,7 +22,13 @@ export interface BlockedDates {
   blockedDates: number[]
 }
 
-export function CalendarStep() {
+interface CalendarStepProps {
+  onSelectedDateTime: (date: Date) => void
+}
+
+export function CalendarStep({
+  onSelectedDateTime,
+}: Readonly<CalendarStepProps>) {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null)
 
   const isDateSelected = !!selectedDate
@@ -72,6 +78,15 @@ export function CalendarStep() {
     },
   })
 
+  function handleSelectTime(hour: number) {
+    const dateWithTime = dayjs(selectedDate)
+      .set('hour', hour)
+      .startOf('hour')
+      .toDate()
+
+    onSelectedDateTime(dateWithTime)
+  }
+
   return (
     <Container isTimePickerOpen={isDateSelected}>
       <Calendar onSelectedDate={setSelectedDate} blockedDates={blockedDates} />
@@ -87,6 +102,7 @@ export function CalendarStep() {
               return (
                 <TimePickerItem
                   key={hour}
+                  onClick={() => handleSelectTime(hour)}
                   disabled={!availability.availableTimes.includes(hour)}>
                   {String(hour).padStart(2, '0')}:00h
                 </TimePickerItem>
