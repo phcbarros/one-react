@@ -2,6 +2,7 @@ import {prisma} from '@/lib/prisma'
 import {Avatar, Heading, Text} from '@ignite-ui/react'
 import {GetStaticPaths, GetStaticProps} from 'next'
 // import {ScheduleForm} from './schedule-form'
+import {NextSeo} from 'next-seo'
 import {ScheduleForm} from './schedule-form'
 import {Container, UserHeader} from './styles'
 
@@ -17,15 +18,18 @@ interface ScheduleProps {
 
 export default function Schedule({user}: Readonly<ScheduleProps>) {
   return (
-    <Container>
-      <UserHeader>
-        <Avatar src={user.avatarUrl} alt={user.name} />
-        <Heading size="md">{user.name}</Heading>
-        <Text>{user.bio}</Text>
-      </UserHeader>
+    <>
+      <NextSeo title={`Agendar com ${user.name} | Ignite Call`} />
+      <Container>
+        <UserHeader>
+          <Avatar src={user.avatarUrl} alt={user.name} />
+          <Heading size="md">{user.name}</Heading>
+          <Text>{user.bio}</Text>
+        </UserHeader>
 
-      <ScheduleForm />
-    </Container>
+        <ScheduleForm />
+      </Container>
+    </>
   )
 }
 
